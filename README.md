@@ -1,6 +1,5 @@
-#Nexis Ultimate
-
-## This was a job task for Frontend Developer Internship Application.
+# Nexis Ultimate
+> This was a job task for Frontend Developer Internship Application at Nexis Limited Bangladesh.
 
 ## Overview (Features and Techs)
 
