@@ -6,20 +6,23 @@ import LogoBar from "../../components/LogoBar";
 import { useForm } from "react-hook-form";
 import WaitDialog from "../../components/WaitDialog";
 import { toast } from "react-toastify";
+import { BsArrowRight } from "react-icons/bs";
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
+    trigger,
     formState: { errors: formErrors },
   } = useForm();
 
   const navigate = useNavigate();
 
   const [showWait, setShowWait] = useState(false);
+  const [step, setStep] = useState(0);
 
   const handleSignUp = async (formData) => {
-    // setShowWait(true);
+    setShowWait(true);
     console.log(formData);
     // try {
     //   const { data: responseData } = await axios.post(
@@ -45,6 +48,21 @@ const SignUp = () => {
     // }
   };
 
+  const handleNext = async () => {
+    if (step === 0) {
+      if (await trigger(["firstname", "lastname"])) {
+        setStep(1);
+      }
+      return;
+    }
+
+    if (step === 1) {
+      if (await trigger(["phone", "email"])) {
+        setStep(2);
+      }
+    }
+  };
+
   return (
     <>
       <section className="container mx-auto p-8 lg:p-16 grid gap-4 grid-cols-3">
@@ -59,41 +77,122 @@ const SignUp = () => {
             <h2 className="text-h3 font-semibold text-center mt-10 lg:mt-20">
               Sign Up
             </h2>
-            <input
-              type="email"
-              className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
-              placeholder="Write Email Address"
-              {...register("email", { required: "Email is required." })}
-            />
-            {formErrors.email && (
-              <p className="mt-2 text-xs text-[#7E7E7E]">
-                {formErrors.email.message}
-              </p>
-            )}
-            <input
-              type="password"
-              placeholder="Write Your Password"
-              className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
-              {...register("password", {
-                required: "Password is required.",
-                minLength: {
-                  value: 8,
-                  message: "Your password must be of 8 characters at least.",
-                },
-              })}
-            />
-            {formErrors.password && (
-              <p className="mt-2 text-xs text-[#7E7E7E]">
-                {formErrors.password.message}
-              </p>
-            )}
 
-            <button
-              type="submit"
-              className="mt-8 w-28 h-8 rounded-md mx-auto bg-primary text-white"
+            <div
+              className={step === 0 ? "flex flex-col items-stretch" : "hidden"}
             >
-              Sign Up
-            </button>
+              <input
+                type="text"
+                className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
+                placeholder="Write First Name"
+                {...register("firstname", {
+                  required: "First Name is required.",
+                })}
+              />
+              {formErrors.firstname && (
+                <p className="mt-2 text-xs text-[#7E7E7E]">
+                  {formErrors.firstname.message}
+                </p>
+              )}
+              <input
+                type="text"
+                placeholder="Write Last Name"
+                className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
+                {...register("lastname", {
+                  required: "Last Name is required.",
+                })}
+              />
+              {formErrors.lastname && (
+                <p className="mt-2 text-xs text-[#7E7E7E]">
+                  {formErrors.lastname.message}
+                </p>
+              )}
+            </div>
+
+            <div
+              className={step === 1 ? "flex flex-col items-stretch" : "hidden"}
+            >
+              <input
+                type="tel"
+                className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
+                placeholder="Write Phone Number"
+                {...register("phone", {
+                  required: "Phone Number is required.",
+                })}
+              />
+              {formErrors.phone && (
+                <p className="mt-2 text-xs text-[#7E7E7E]">
+                  {formErrors.phone.message}
+                </p>
+              )}
+              <input
+                type="email"
+                placeholder="Write Email Address"
+                className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
+                {...register("email", {
+                  required: "Email is required.",
+                })}
+              />
+              {formErrors.email && (
+                <p className="mt-2 text-xs text-[#7E7E7E]">
+                  {formErrors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div
+              className={step === 2 ? "flex flex-col items-stretch" : "hidden"}
+            >
+              <input
+                type="password"
+                className="bg-white mt-8 pl-6 pb-0 placeholder:text-[#B4B4B4] border-0 border-b-2 focus:border-0 focus:border-b-2 focus:border-[#B4B4B4] focus:ring-0"
+                placeholder="Write Minimum 8 Character Password"
+                {...register("password", {
+                  required: "Password is required.",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters long!",
+                  },
+                })}
+              />
+              {formErrors.password && (
+                <p className="mt-2 text-xs text-[#7E7E7E]">
+                  {formErrors.password.message}
+                </p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-3 mt-8 justify-center items-center">
+              {step !== 0 ? (
+                <span
+                  className="text-xs text-[#7E7E7E] justify-self-start"
+                  onClick={() => setStep(step - 1)}
+                >
+                  Back
+                </span>
+              ) : (
+                <span />
+              )}
+              {step !== 2 && (
+                <button
+                  type="button"
+                  className="w-28 h-8 rounded-md mx-auto bg-primary text-white"
+                  onClick={handleNext}
+                >
+                  <span>
+                    Next <BsArrowRight className="inline" />
+                  </span>
+                </button>
+              )}
+              {step === 2 && (
+                <button
+                  type="submit"
+                  className="w-28 h-8 rounded-md mx-auto bg-primary text-white"
+                >
+                  Sign Up
+                </button>
+              )}
+            </div>
           </form>
           <p className="mt-12 text-right">
             Already have an account?{" "}
