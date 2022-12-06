@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Banner from "../../components/Banner";
 import LogoBar from "../../components/LogoBar";
@@ -13,10 +13,9 @@ const SignUp = () => {
     register,
     handleSubmit,
     trigger,
+    reset,
     formState: { errors: formErrors },
   } = useForm();
-
-  const navigate = useNavigate();
 
   const [showWait, setShowWait] = useState(false);
   const [step, setStep] = useState(0);
@@ -24,28 +23,44 @@ const SignUp = () => {
   const handleSignUp = async (formData) => {
     setShowWait(true);
     console.log(formData);
-    // try {
-    //   const { data: responseData } = await axios.post(
-    //     "https://test.nexisltd.com/users/login",
-    //     formData
-    //   );
-    //   console.log("Response Log in", responseData);
-    //   navigate("/", { replace: true });
-    // } catch (err) {
-    //   console.error(err);
-    //   toast.error("Cannot log in!", {
-    //     position: "bottom-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "colored",
-    //   });
-    // } finally {
-    //   setShowWait(false);
-    // }
+    try {
+      const { data: responseData } = await axios.post(
+        "https://test.nexisltd.com/signup",
+        {
+          first_name: formData.firstname,
+          last_Name: formData.lastname,
+          phone_number: formData.phone,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
+      console.log("Response Sign Up! Redirecting to Log In.", responseData);
+      toast.success("Successfully signed up!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Cannot Sign Up!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      setShowWait(false);
+    }
   };
 
   const handleNext = async () => {

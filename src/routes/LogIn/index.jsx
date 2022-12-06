@@ -23,10 +23,22 @@ const LogIn = () => {
     console.log(formData);
     try {
       const { data: responseData } = await axios.post(
-        "https://test.nexisltd.com/users/login",
+        "https://test.nexisltd.com/login",
         formData
       );
       console.log("Response Log in", responseData);
+      toast.success("Successfully Logged In!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      localStorage.setItem("access_token", responseData.access_token);
+      localStorage.setItem("refresh_token", responseData.refresh_token);
       navigate("/", { replace: true });
     } catch (err) {
       console.error(err);
@@ -47,8 +59,8 @@ const LogIn = () => {
 
   return (
     <>
-      <section className="container mx-auto p-8 lg:p-16 grid gap-4 grid-cols-3">
-        <div className="col-span-3 lg:col-span-1 lg:order-2 shadow-lg px-8 lg:px-16">
+      <section className="container mx-auto p-8 lg:p-16 grid gap-4 grid-cols-7">
+        <div className="col-span-5 lg:col-span-3 lg:order-2 shadow-lg px-8 lg:px-16">
           <div className="lg:hidden">
             <LogoBar />
           </div>
@@ -102,7 +114,7 @@ const LogIn = () => {
             .
           </p>
         </div>
-        <div className="hidden lg:block lg:col-span-2 lg:order-1">
+        <div className="hidden lg:block lg:col-span-4 lg:order-1">
           <LogoBar />
           <Banner />
         </div>
