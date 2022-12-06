@@ -65,6 +65,14 @@ const AttendanceTable = () => {
   return (
     <section className="container p-8 mx-auto">
       <LogoBar />
+      <p className="text-right">
+        <button
+          onClick={logOut}
+          className="bg-red-500 text-white px-4 rounded-md py-2"
+        >
+          Log Out
+        </button>
+      </p>
       <h1 className="my-4 text-3xl text-center text-primary font-semibold">
         Attendance Book
       </h1>

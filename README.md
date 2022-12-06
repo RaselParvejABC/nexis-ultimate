@@ -10,7 +10,7 @@
 
 > - `Vite` as Dev Server and Build Tool
 > - Customized `TailwindCSS` for Colors, Font Family and Font Size of Headings
-> - `axios` for HTTP Client
+> - `axios` as HTTP Client
 > - `react-hook-form` for efficient form management
 >   - `reset()`
 >   - `trigger()`

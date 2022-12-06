@@ -59,8 +59,8 @@ const LogIn = () => {
 
   return (
     <>
-      <section className="container mx-auto p-8 lg:p-16 grid gap-4 grid-cols-7">
-        <div className="col-span-5 lg:col-span-3 lg:order-2 shadow-lg px-8 lg:px-16">
+      <section className="container mt-8 lg:mt-0 mx-0 lg:mx-auto lg:p-8 lg:p-16 grid gap-4 lg:grid-cols-7">
+        <div className="lg:col-span-3 lg:order-2 shadow-lg px-8 lg:px-16">
           <div className="lg:hidden">
             <LogoBar />
           </div>
@@ -106,7 +106,7 @@ const LogIn = () => {
               Log In
             </button>
           </form>
-          <p className="mt-12 text-right">
+          <p className="my-12 text-right">
             Don't have an account?{" "}
             <Link className="text-primary" to="/signup">
               Sign Up

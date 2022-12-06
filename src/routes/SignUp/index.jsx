@@ -80,7 +80,7 @@ const SignUp = () => {
 
   return (
     <>
-      <section className="container mx-auto p-8 lg:p-16 grid gap-4 grid-cols-3">
+      <section className="container mt-8 lg:mt-0 mx-auto lg:p-8 lg:p-16 grid gap-4 grid-cols-3">
         <div className="col-span-3 lg:col-span-1 lg:order-2 shadow-lg px-8 lg:px-16">
           <div className="lg:hidden">
             <LogoBar />
@@ -209,7 +209,7 @@ const SignUp = () => {
               )}
             </div>
           </form>
-          <p className="mt-12 text-right">
+          <p className="my-12 text-right">
             Already have an account?{" "}
             <Link className="text-primary" to="/login">
               Log In
